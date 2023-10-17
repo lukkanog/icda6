@@ -28,3 +28,54 @@ calcularIdadeEmAnos <- function(idade) {
     return(0)
   }
 }
+
+
+valoresSaoIguais <- function(valor1, valor2){
+  return (valor1 == valor2)
+}
+
+
+separaFaixaEtariaPorIdade <- function(idade){
+  
+  if (is.na(idade)) {
+    return(-1)  # Valor numérico para dados de idade ausentes.
+  }
+
+  if (idade >= 0 & idade <= 10) 
+  {
+    return (0)
+  } 
+  else if (idade <= 20) {
+    return (1)
+  } 
+  else if (idade <= 30) {
+    return (2)  
+  }
+  else if(idade <= 40)
+  {
+    return (3)  
+  }
+  else if(idade <= 50)
+  {
+    return (4)
+  }
+  else if(idade <= 60)
+  {
+    return (5)  
+  }
+  else if(idade <= 70)
+  {
+    return (6)  
+  }
+  else if(idade <= 80)
+  {
+    return (7)
+  }
+  else if(idade <= 90)
+  {
+    return (8)  
+  }
+  else{
+    return (9)
+  }
+}
