@@ -31,7 +31,21 @@ calcularIdadeEmAnos <- function(idade) {
 
 
 valoresSaoIguais <- function(valor1, valor2){
-  return (valor1 == valor2)
+  
+  
+  ifelse(is.null(valor1))
+  {
+    return (0)
+  }
+  
+  ifelse(is.null(valor2))
+  {
+    return (1)
+  }
+  
+  return (valor1 == valor2 ? 1 : 0)
+    
+  
 }
 
 
@@ -79,3 +93,4 @@ separaFaixaEtariaPorIdade <- function(idade){
     return (9)
   }
 }
+
