@@ -48,6 +48,20 @@ valoresSaoIguais <- function(valor1, valor2){
   
 }
 
+isAdult <- function(idade)
+{
+  if(is.na(idade))
+    return(-1)
+  
+  if(idade < 18)
+    return (0)
+  
+  return (1)
+}
+separaFaixaEtariaInfantil <- function(idade)
+{
+    
+}
 
 separaFaixaEtariaPorIdade <- function(idade){
   

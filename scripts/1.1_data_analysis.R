@@ -1,7 +1,17 @@
 library(ggplot2)
 
+ggplot(data = MortalidadeInfantil, aes(x = factor(IDADE_EM_ANOS))) +
+  geom_bar() + 
+  theme_mi
+
+ggplot(data = MortalidadeAdulta, aes(x = IDADE_EM_ANOS)) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Distribuição da Idade em Anos",
+       x = "Idade em Anos",
+       y = "Frequência")
+
 # Crie um gráfico de barras para visualizar a contagem de cada grupo etário.
-ggplot(data = subset(MORTALIDADE_2021_filtrado, RACACOR == 2, SEXO = 1), aes(x = factor(GRUPO_ETARIO))) +
+ggplot(data = subset(Mortalidade, RACACOR == 1), aes(x = factor(GRUPO_ETARIO))) +
   geom_bar() +
   labs(x = "Grupo Etário", y = "Contagem") +
   scale_x_discrete(labels = c(
@@ -11,11 +21,11 @@ ggplot(data = subset(MORTALIDADE_2021_filtrado, RACACOR == 2, SEXO = 1), aes(x =
   theme_minimal()
 
 MORTALIDADE_2021_MULHERES <- MORTALIDADE_2021_filtrado[MORTALIDADE_2021_filtrado$SEXO == 2, ]
-MORTALIDADE_2021_MULHERES_MUDARAM <- MORTALIDADE_2021_MULHERES[MORTALIDADE_2021_MULHERES$IGUAIS == FALSE, ]
-MORTALIDADE_2021_MULHERES_NAOMUDARAM <- MORTALIDADE_2021_MULHERES[MORTALIDADE_2021_MULHERES$IGUAIS != FALSE, ]
+MORTALIDADE_2021_MULHERES_MUDARAM <- MORTALIDADE_2021_MULHERES[MORTALIDADE_2021_MULHERES$MORAVA_ONDE_NASCEU == FALSE, ]
+MORTALIDADE_2021_MULHERES_NAOMUDARAM <- MORTALIDADE_2021_MULHERES[MORTALIDADE_2021_MULHERES$MORAVA_ONDE_NASCEU != FALSE, ]
 
 
-ggplot(data = subset(MORTALIDADE_2021_MULHERES_NAOMUDARAM, OBITOFE1 == 2), aes(x = factor(GRUPO_ETARIO))) +
+ggplot(data = subset(MORTALIDADE_2021_MULHERES_NAOMUDARAM), aes(x = factor(GRUPO_ETARIO))) +
   geom_bar() +
   labs(x = "Grupo Etário", y = "Contagem") +
   scale_x_discrete(labels = c(
@@ -24,7 +34,7 @@ ggplot(data = subset(MORTALIDADE_2021_MULHERES_NAOMUDARAM, OBITOFE1 == 2), aes(x
   )) +
   theme_minimal()
 
-ggplot(data = subset(MORTALIDADE_2021_filtrado, RACACOR == 5), aes(x = factor(GRUPO_ETARIO), fill = factor(SEXO))) +
+ggplot(data = subset(MORTALIDADE_2021_filtrado, RACACOR == 1), aes(x = factor(GRUPO_ETARIO), fill = factor(SEXO))) +
   geom_bar(position = position_dodge(width = 0.7), width = 0.7) +
   scale_fill_manual(values = c("1" = "red", "2" = "blue")) +
   labs(x = "Grupo Etário", y = "Contagem") +
@@ -35,7 +45,3 @@ ggplot(data = subset(MORTALIDADE_2021_filtrado, RACACOR == 5), aes(x = factor(GR
   theme_minimal()
 
 
-GRUPO_ETARIO <- SEXO, RACACOR, ESTCIV
-
-
-//Levantar dado se a pessoa morreu enquanto morava no mesmo municipio que nasceu

@@ -2,14 +2,44 @@ library(readr)
 library(dplyr)
 
 
-MORTALIDADE_2021 <- read_delim("data/Mortalidade_Geral_2021.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE)rm(MORTALIDADE_2021)
-MORTALIDADE_2021['IDADE_EM_ANOS'] <- apply(MORTALIDADE_2021['IDADE'], 1, calcularIdadeEmAnos)  
-MORTALIDADE_2021$GRUPO_ETARIO <- sapply(MORTALIDADE_2021$IDADE_EM_ANOS, separaFaixaEtariaPorIdade)
-MORTALIDADE_2021['GRUPO_ETARIO'] <- apply(MORTALIDADE_2021['IDADE_EM_ANOS'], 1, separaFaixaEtariaPorIdade)  
-MORTALIDADE_2021_filtrado <- MORTALIDADE_2021[MORTALIDADE_2021$GRUPO_ETARIO != -1, ]
+#IMPORTACAO DOS DADOS DE MORTALIDADE
+Mortalidade <- read_delim("data/Mortalidade_Geral_2021.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE)
+View(Mortalidade)
+#IMPORTACAO DOS DADOS DE MUNICIPIO
+Municipios <- read_csv("data/Municipios.csv")
+View(Municipios)
 
-MORTALIDADE_2021$MORAVA_ONDE_NASCEU <- ifelse(MORTALIDADE_2021$CODMUNRES == MORTALIDADE_2021$CODMUNNATU, 1, 0)
-MORTALIDADE_2021$IMC <- 
-View(MORTALIDADE_2021)
+
+#CONVERSÂO DE DADOS, ADICIONANDO PROPRIEDADES IDADE EM ANOS, GRUPO ETARIO
+Mortalidade['IDADE_EM_ANOS'] <- apply(Mortalidade['IDADE'], 1, calcularIdadeEmAnos)  
+Mortalidade['GRUPO_ETARIO'] <- apply(Mortalidade['IDADE_EM_ANOS'], 1, separaFaixaEtariaPorIdade) 
+Mortalidade['MAIOR_DE_IDADE'] <- apply(Mortalidade['IDADE_EM_ANOS'], 1, isAdult) 
+
+#BUSCANDO DADOS DA UF
+
+
+Mortalidade <- Mortalidade %>%
+  left_join(Municipios %>% select(CODMUNIC, uf_code), by = c("CODMUNRES" = "CODMUNIC"), keep = TRUE) %>%
+  select(-CODMUNIC) 
+
+colnames(Mortalidade)[colnames(Mortalidade) == "uf_code"] <- "UF"
+
+#Separando por mortalidade infantil e adulta
+MortalidadeInfantil <- Mortalidade[Mortalidade$MAIOR_DE_IDADE == 0, ]
+View(MortalidadeInfantil)
+
+MortalidadeAdulta <- Mortalidade[Mortalidade$MAIOR_DE_IDADE == 1, ]
+View(MortalidadeAdulta)
+
+#Gerando dados de teste e treinamento
+MortalidadeInfantilNumeroLinhasTeste <- sample(1:nrow(MortalidadeInfantil), 0.7 * nrow(MortalidadeInfantil))  
+MortalidadeAdultaNumeroLinhasTeste <- sample(1:nrow(MortalidadeAdulta), 0.7 * nrow(MortalidadeAdulta))
+
+
+MortalidadeInfantilTreinamento <- MortalidadeInfantil[MortalidadeInfantilNumeroLinhasTeste, ]
+MortalidadeInfantilTeste <- MortalidadeInfantil[-MortalidadeInfantilNumeroLinhasTeste, ]
+
+MortalidadeAdultaTreinamento <- MortalidadeAdulta[MortalidadeAdultaNumeroLinhasTeste, ]
+MortalidadeAdultaTeste <- MortalidadeAdulta[-MortalidadeAdultaNumeroLinhasTeste, ]
 
 
