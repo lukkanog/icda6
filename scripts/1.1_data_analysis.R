@@ -4,7 +4,7 @@ ggplot(data = MortalidadeInfantil, aes(x = factor(IDADE_EM_ANOS))) +
   geom_bar() + 
   theme_mi
 
-ggplot(data = MortalidadeAdulta, aes(x = IDADE_EM_ANOS)) +
+ggplot(data = MortalidadeAdultaTreinamento, aes(x = GRUPO_ETARIO)) +
   geom_histogram(binwidth = 1, fill = "blue", color = "black") +
   labs(title = "Distribuição da Idade em Anos",
        x = "Idade em Anos",

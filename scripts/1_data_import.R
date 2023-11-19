@@ -26,10 +26,13 @@ colnames(Mortalidade)[colnames(Mortalidade) == "uf_code"] <- "UF"
 
 #Separando por mortalidade infantil e adulta
 MortalidadeInfantil <- Mortalidade[Mortalidade$MAIOR_DE_IDADE == 0, ]
+MortalidadeInfantil['GRUPO_ETARIO'] <- apply(MortalidadeInfantil['IDADE_EM_ANOS'], 1, separaFaixaEtariaInfantil)
 View(MortalidadeInfantil)
 
 MortalidadeAdulta <- Mortalidade[Mortalidade$MAIOR_DE_IDADE == 1, ]
+MortalidadeAdulta['GRUPO_ETARIO'] <- apply(MortalidadeAdulta['IDADE_EM_ANOS'], 1, separaFaixaEtariaAdultos)
 View(MortalidadeAdulta)
+
 
 #Gerando dados de teste e treinamento
 MortalidadeInfantilNumeroLinhasTeste <- sample(1:nrow(MortalidadeInfantil), 0.7 * nrow(MortalidadeInfantil))  
