@@ -31,6 +31,8 @@ View(MortalidadeInfantil)
 
 MortalidadeAdulta <- Mortalidade[Mortalidade$MAIOR_DE_IDADE == 1, ]
 MortalidadeAdulta['GRUPO_ETARIO'] <- apply(MortalidadeAdulta['IDADE_EM_ANOS'], 1, separaFaixaEtariaAdultos)
+MortalidadeAdulta <- MortalidadeAdulta %>%
+  mutate(MORREU_ONDE_NASCEU = ifelse(CODMUNRES == CODMUNNATU, 1, 0))
 View(MortalidadeAdulta)
 
 
