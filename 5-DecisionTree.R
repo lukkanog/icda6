@@ -1,7 +1,7 @@
 library(rpart)
 library(rpart.plot)
 
-ArvoreGravidezTreinamento <- rpart(formula =  PARTO ~ ESCMAE + RACACORMAE + LOCNASC + FAIXAETARIA + UF + GRAVIDEZ + PARIDADE,
+ArvoreGravidezTreinamento <- rpart(formula =  PARTO ~ ESCMAE + RACACORMAE + LOCNASC + FAIXAETARIA + UF + GRAVIDEZ + PARIDADE + JA_FEZ_CESAREA + JA_FEZ_VAGINAL,
                    data = DadosGravidez2021Treinamento,
                    method = "class",  # classificação
                    xval = 10  # 10-fold cross-validation 

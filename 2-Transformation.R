@@ -19,11 +19,15 @@ DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$RACACORMAE), ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$IDADEMAE), ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$GRAVIDEZ), ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$UF), ]
+DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$QTDPARTCES), ]
+DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$QTDPARTNOR), ]
 
 
 #Criando novas colunas
 
 DadosGravidez2021 <- DadosGravidez2021 %>% mutate(MAIORIDADE = ifelse(IDADEMAE > 19, 1, 0))
+DadosGravidez2021 <- DadosGravidez2021 %>% mutate(JA_FEZ_CESAREA = ifelse(QTDPARTCES == "00", 0, 1))
+DadosGravidez2021 <- DadosGravidez2021 %>% mutate(JA_FEZ_VAGINAL = ifelse(QTDPARTNOR == "00", 0, 1))
 DadosGravidez2021 <- DadosGravidez2021 %>%
   mutate(FAIXAETARIA = sapply(IDADEMAE, separaFaixaEtaria))
 
@@ -37,7 +41,10 @@ DadosGravidez2021$LOCNASC = as.factor(DadosGravidez2021$LOCNASC)
 DadosGravidez2021$FAIXAETARIA = as.factor(DadosGravidez2021$FAIXAETARIA)
 DadosGravidez2021$GRAVIDEZ = as.factor(DadosGravidez2021$GRAVIDEZ)
 DadosGravidez2021$PARIDADE = as.factor(DadosGravidez2021$PARIDADE)
+DadosGravidez2021$ESTCIVMAE = as.factor(DadosGravidez2021$ESTCIVMAE)
 DadosGravidez2021$UF = as.factor(DadosGravidez2021$UF)
+DadosGravidez2021$JA_FEZ_CESAREA = as.factor(DadosGravidez2021$JA_FEZ_CESAREA)
+DadosGravidez2021$JA_FEZ_VAGINAL = as.factor(DadosGravidez2021$JA_FEZ_VAGINAL)
 
 View(DadosGravidez2021)
 
