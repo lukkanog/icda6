@@ -26,7 +26,7 @@ ggplot(subset(DadosGravidez2021, ESCMAE != 9), aes(x = ESCMAE, fill = PARTO)) +
   scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea"))
 
 
-ggplot(DadosGravidez2021, aes(x = JA_FEZ_CESAREA, fill = PARTO)) +
+ggplot(DadosGravidez2021, aes(x = JA_TEVE_PARTO_CESARIA, fill = PARTO)) +
   geom_bar(position = "dodge") +
   labs(title = "Tipo de parto se já fez vaginal",
        x = "LOCNASC",

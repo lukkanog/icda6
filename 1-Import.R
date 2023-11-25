@@ -7,3 +7,4 @@ Municipios <- read_csv("data/Municipios.csv")
 
 
 View(DadosGravidez2021)
+View(Municipios)

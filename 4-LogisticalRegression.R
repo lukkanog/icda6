@@ -3,7 +3,8 @@ library(caret)
 library(pROC)
 
 
-ModeloRegressaoLinear <- glm(PARTO ~ ESCMAE + RACACORMAE + LOCNASC + FAIXAETARIA + UF + GRAVIDEZ + PARIDADE, data = DadosGravidez2021Treinamento, family = "binomial", na.action = na.exclude)
+ModeloRegressaoLinear <- glm(PARTO ~ ESCMAE + RACACORMAE + LOCNASC + FAIXAETARIA + UF + GRAVIDEZ + PARIDADE + JA_TEVE_PARTO_CESARIA + JA_TEVE_PARTO_VAGINAL, 
+                             data = DadosGravidez2021Treinamento, family = "binomial", na.action = na.exclude)
 summary(ModeloRegressaoLinear)
 
 
