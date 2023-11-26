@@ -15,28 +15,33 @@ ArvoreGravidezTreinamento.class <- prune(ArvoreGravidezTreinamento,
 
 rpart.plot(ArvoreGravidezTreinamento.class)
 
-
 #Prevendo com dados de treinamento
-ArvoreGravidezTreinamento.class.pred <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Treinamento, type = "class")
+DadosGravidez2021Treinamento$PARTO_PREDITO_ARVORE_DECISAO <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Treinamento, type = "class")
 
 #Avaliação do modelo com dados de treinamento
-ArvoreGravidezTreinamento.class.conf <- confusionMatrix(data = ArvoreGravidezTreinamento.class.pred,reference = DadosGravidez2021Treinamento$PARTO)
-ArvoreGravidezTreinamento.class.conf
+MatrizDeConfusaoTreinamentoArvore <- confusionMatrix(
+  data = DadosGravidez2021Treinamento$PARTO_PREDITO_ARVORE_DECISAO,
+  reference = DadosGravidez2021Treinamento$PARTO)
+MatrizDeConfusaoTreinamentoArvore
 
 #Montando a curva ROC com dados de treinamento
-ArvoreGravidezTreinamento.class.pred_1 <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Treinamento, type = "prob")[, 2]
-ArvoreGravidezTreinamento.class_roc<-roc(DadosGravidez2021Treinamento$PARTO ~ ArvoreGravidezTreinamento.class.pred_1, plot = TRUE, print.auc = TRUE)
+PredicaoTreinamentoArvoreCurvaROC <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Treinamento, type = "prob")[, 1]
+RocCurveTreinamentoArvore<-roc(DadosGravidez2021Treinamento$PARTO ~ PredicaoTreinamentoArvoreCurvaROC, plot = TRUE, print.auc = TRUE)
 
 
 
-#ARRUMAR VARIAVEIS DAQUI PRA BAIXO
 #Prevendo com dados de teste
-DadosGravidez2021Teste.PARTO_PREDITO <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Teste, type = "class")
+DadosGravidez2021Teste$PARTO_PREDITO_ARVORE_DECISAO <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Teste, type = "class")
 
 #Avaliação do modelo com dados de teste
-ArvoreGravidezTreinamento.class.conf <- confusionMatrix(data = DadosGravidez2021Teste.PARTO_PREDITO ,reference = DadosGravidez2021Teste$PARTO)
-ArvoreGravidezTreinamento.class.conf
+MatrizDeConfusaoTesteArvore <- confusionMatrix(
+  data = DadosGravidez2021Teste$PARTO_PREDITO_ARVORE_DECISAO,
+  reference = DadosGravidez2021Teste$PARTO)
+MatrizDeConfusaoTesteArvore
 
 #Montando a curva ROC com dados de teste
-ArvoreGravidezTreinamento.class.pred_1 <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Teste, type = "prob")[, 2]
-ArvoreGravidezTreinamento.class_roc<-roc(DadosGravidez2021Teste$PARTO ~ ArvoreGravidezTreinamento.class.pred_1, plot = TRUE, print.auc = TRUE)
+PredicaoTesteArvoreCurvaROC <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Teste, type = "prob")[, 2]
+RocCurveTesteArvore<-roc(DadosGravidez2021Teste$PARTO ~ PredicaoTesteArvoreCurvaROC, plot = TRUE, print.auc = TRUE)
+
+
+
