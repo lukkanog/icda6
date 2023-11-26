@@ -3,15 +3,19 @@ library(dplyr)
 #Integrando dados de municipios
 
 DadosGravidez2021 <- DadosGravidez2021 %>%
-  left_join(Municipios %>% select(CODMUNIC, uf_code), by = c("CODMUNNASC" = "CODMUNIC"), keep = TRUE) %>%
-  select(-CODMUNIC) 
-colnames(DadosGravidez2021)[colnames(DadosGravidez2021) == "uf_code"] <- "UF"
+  left_join(Municipios %>% 
+              group_by(CODMUNIC) %>% 
+              slice(1) %>% 
+              ungroup() %>% 
+              select(CODMUNIC, uf_code),
+            by = c("CODMUNNASC" = "CODMUNIC")) %>%
+  rename(UF = uf_code)
 
+View(DadosGravidez2021)
 #Filtrando valores de parto não informados
 
 DadosGravidez2021 <- DadosGravidez2021[DadosGravidez2021$PARTO != 9, ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$PARTO), ]
-
 
 #Filtrando valores nulos para colunas que serão utilizadas
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$ESCMAE), ]
@@ -21,7 +25,15 @@ DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$GRAVIDEZ), ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$UF), ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$QTDPARTCES), ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$QTDPARTNOR), ]
+DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$PARIDADE), ]
+DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$GRAVIDEZ), ]
 
+
+#Filtrando valores não informados para colunas que serão utilizadas
+
+DadosGravidez2021 <- DadosGravidez2021[DadosGravidez2021$ESCMAE != 9, ]
+DadosGravidez2021 <- DadosGravidez2021[DadosGravidez2021$GRAVIDEZ != 9, ]
+DadosGravidez2021 <- DadosGravidez2021[DadosGravidez2021$LOCNASC != 9, ]
 
 #Criando novas colunas
 
@@ -46,7 +58,6 @@ DadosGravidez2021$UF = as.factor(DadosGravidez2021$UF)
 DadosGravidez2021$JA_TEVE_PARTO_CESARIA = as.factor(DadosGravidez2021$JA_TEVE_PARTO_CESARIA)
 DadosGravidez2021$JA_TEVE_PARTO_VAGINAL = as.factor(DadosGravidez2021$JA_TEVE_PARTO_VAGINAL)
 
-View(DadosGravidez2021)
 
 
 #Separando valores de teste e treinamento
