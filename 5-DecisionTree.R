@@ -4,7 +4,8 @@ library(rpart.plot)
 ArvoreGravidezTreinamento <- rpart(formula =  PARTO ~ ESCMAE + RACACORMAE + LOCNASC + FAIXAETARIA + UF + GRAVIDEZ + PARIDADE + JA_TEVE_PARTO_CESARIA + JA_TEVE_PARTO_VAGINAL,
                    data = DadosGravidez2021Treinamento,
                    method = "class",  # classificação
-                   xval = 10  # 10-fold cross-validation 
+                   xval = 10,  # 10-fold cross-validation,
+                   control = rpart.control(cp = 0.001) 
 )
 
 rpart.plot(ArvoreGravidezTreinamento)
@@ -40,7 +41,7 @@ MatrizDeConfusaoTesteArvore <- confusionMatrix(
 MatrizDeConfusaoTesteArvore
 
 #Montando a curva ROC com dados de teste
-PredicaoTesteArvoreCurvaROC <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Teste, type = "prob")[, 2]
+PredicaoTesteArvoreCurvaROC <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Teste, type = "prob")[, 1]
 RocCurveTesteArvore<-roc(DadosGravidez2021Teste$PARTO ~ PredicaoTesteArvoreCurvaROC, plot = TRUE, print.auc = TRUE)
 
 
