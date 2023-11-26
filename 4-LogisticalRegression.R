@@ -11,7 +11,7 @@ summary(ModeloRegressaoLinear)
 #Matriz de confusão - Treinamento
 DadosGravidez2021Treinamento$PARTO_PREDITO_REGRESSAO_LOGISTICA <- ifelse(predict(ModeloRegressaoLinear, newdata = DadosGravidez2021Treinamento) > 0.50, 2, 1)
 TabelaDadosTreinamento <- table(predicted = DadosGravidez2021Treinamento$PARTO_PREDITO_REGRESSAO_LOGISTICA, actual = DadosGravidez2021Treinamento$PARTO)
-confusionMatrix(TabelaDadosTreinamento, positive = "1")
+confusionMatrix(TabelaDadosTreinamento, positive = "2")
 
 
 #Curva ROC - Treinamento
@@ -23,7 +23,7 @@ legend("bottomright", legend = c("ROC Curve", "Random"), col = c("black", "gray"
 #Matriz de confusão - Teste
 DadosGravidez2021Teste$PARTO_PREDITO_REGRESSAO_LOGISTICA <- ifelse(predict(ModeloRegressaoLinear, newdata = DadosGravidez2021Teste) > 0.5, 2, 1)
 TabelaDadosTeste <- table(predicted = DadosGravidez2021Teste$PARTO_PREDITO_REGRESSAO_LOGISTICA, actual = DadosGravidez2021Teste$PARTO)
-confusionMatrix(TabelaDadosTeste, positive = "1")
+confusionMatrix(TabelaDadosTeste, positive = "2")
 
 
 #Curva ROC - Teste
