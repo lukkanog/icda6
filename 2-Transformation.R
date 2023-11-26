@@ -19,6 +19,7 @@ DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$PARTO), ]
 
 #Filtrando valores nulos para colunas que serão utilizadas
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$ESCMAE), ]
+DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$ESTCIVMAE), ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$RACACORMAE), ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$IDADEMAE), ]
 DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$GRAVIDEZ), ]
@@ -32,6 +33,7 @@ DadosGravidez2021 <- DadosGravidez2021[!is.na(DadosGravidez2021$GRAVIDEZ), ]
 #Filtrando valores não informados para colunas que serão utilizadas
 
 DadosGravidez2021 <- DadosGravidez2021[DadosGravidez2021$ESCMAE != 9, ]
+DadosGravidez2021 <- DadosGravidez2021[DadosGravidez2021$ESTCIVMAE != 9, ]
 DadosGravidez2021 <- DadosGravidez2021[DadosGravidez2021$GRAVIDEZ != 9, ]
 DadosGravidez2021 <- DadosGravidez2021[DadosGravidez2021$LOCNASC != 9, ]
 
@@ -48,6 +50,7 @@ DadosGravidez2021$PARTO <- as.factor(DadosGravidez2021$PARTO)
 
 #Variavel independente
 DadosGravidez2021$ESCMAE = as.factor(DadosGravidez2021$ESCMAE)
+DadosGravidez2021$ESTCIVMAE = as.factor(DadosGravidez2021$ESTCIVMAE)
 DadosGravidez2021$RACACORMAE = as.factor(DadosGravidez2021$RACACORMAE)
 DadosGravidez2021$LOCNASC = as.factor(DadosGravidez2021$LOCNASC)
 DadosGravidez2021$FAIXAETARIA = as.factor(DadosGravidez2021$FAIXAETARIA)
@@ -57,8 +60,6 @@ DadosGravidez2021$ESTCIVMAE = as.factor(DadosGravidez2021$ESTCIVMAE)
 DadosGravidez2021$UF = as.factor(DadosGravidez2021$UF)
 DadosGravidez2021$JA_TEVE_PARTO_CESARIA = as.factor(DadosGravidez2021$JA_TEVE_PARTO_CESARIA)
 DadosGravidez2021$JA_TEVE_PARTO_VAGINAL = as.factor(DadosGravidez2021$JA_TEVE_PARTO_VAGINAL)
-
-
 
 #Separando valores de teste e treinamento
 NumerosLinhasTeste <- sample(1:nrow(DadosGravidez2021), 0.7 * nrow(DadosGravidez2021))
