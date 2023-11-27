@@ -1,50 +1,91 @@
+install.packages("arules")
+install.packages("arulesViz")
+
+library(arules)
+library(arulesViz)
+library(corrplot)
 library(ggplot2)
 
 summary(DadosGravidez2021$PARTO)
 
+#### lucas
+
+
+
+flat_list <- unlist(DadosGravidez2021, recursive = TRUE)
+
+# Convert the flattened list to a transactions object
+transactions <- as(flat_list, "transactions")
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################3
+
+
 ggplot(DadosGravidez2021, aes(x = LOCNASC, fill = PARTO)) +
-  geom_bar(position = "dodge") +
+  geom_bar() +
   labs(title = "Tipo de parto por local de nascimento",
-       x = "LOCNASC",
-       y = "Count") +
-  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea"))
+       x = "Local de Nascimento",
+       y = "Quantidade") +
+  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesárea")) +
+  scale_x_discrete(labels = c("Hospital", "Outros", "Domicílio", "Outros", "Aldeia Indígena"))
+
 View(DadosGravidezPartoSemEscolaridade)
 
 
 ggplot(DadosGravidez2021, aes(x = ESTCIVMAE, fill = PARTO)) +
-  geom_bar(position = "dodge") +
+  geom_bar() +
   labs(title = "Tipo de parto por situação conjugal da mãe",
-       x = "LOCNASC",
-       y = "Count") +
-  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea"))
+       x = "Estado civil da mãe",
+       y = "Quantidade") +
+  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea")) +
+  scale_x_discrete(labels = c("Solteira", "Casada", "Viúva", "Separada judicialmente/divorciada", "União Estável"))
+
 
 ggplot(subset(DadosGravidez2021, ESCMAE != 9), aes(x = ESCMAE, fill = PARTO)) +
-  geom_bar(position = "dodge") +
+  geom_bar() +
   labs(title = "Tipo de parto por escolaridade da mãe",
-       x = "LOCNASC",
-       y = "Count") +
-  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea"))
-
+       x = "Escolaridade da mãe (em anos)",
+       y = "Quantidade") +
+  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea")) +
+  scale_x_discrete(labels = c("Nenhuma", "1 a 3", "4 a 7", "8 a 11", "12 e mais"))
 
 ggplot(DadosGravidez2021, aes(x = JA_TEVE_PARTO_VAGINAL, fill = PARTO)) +
-  geom_bar(position = "dodge") +
+  geom_bar() +
   labs(title = "Tipo de parto se já teve parto vaginal",
-       x = "LOCNASC",
-       y = "Count") +
-  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea"))
+       x = "Já teve parto vaginal?",
+       y = "Quantidade") +
+  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea")) +
+  scale_x_discrete(labels = c("Não", "Sim"))
 
 ggplot(DadosGravidez2021, aes(x = JA_TEVE_PARTO_CESARIA, fill = PARTO)) +
-  geom_bar(position = "dodge") +
-  labs(title = "Tipo de parto se já teve parto cesaria",
-       x = "LOCNASC",
-       y = "Count") +
-  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea"))
+  geom_bar() +
+  labs(title = "Tipo de parto se já teve parto cesárea",
+       x = "Já teve parto cesárea?",
+       y = "Quantidade") +
+  scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea")) +
+  scale_x_discrete(labels = c("Não", "Sim"))
 
 ggplot(DadosGravidez2021, aes(x = UF, fill = PARTO)) +
-  geom_bar(position = "dodge") +
+  geom_bar() +
   labs(title = "Tipo de parto por UF de nascimento",
-       x = "LOCNASC",
-       y = "Count") +
+       x = "UF",
+       y = "Quantidade") +
   scale_fill_manual(values = c("blue", "red"), breaks = c(1, 2), labels = c("Vaginal", "Cesarea"))
+
+ggplot(DadosGravidez2021, aes(x = PARTO, y = IDADEMAE)) +
+  geom_boxplot(fill = c("blue", "red"), color = "black") +
+  labs(title = "Boxplot da Idade da Mãe por Tipo de Parto",
+       x = "Tipo de Parto",
+       y = "Idade da Mãe") +
+  scale_x_discrete(labels = c("Vaginal", "Cesárea"))
 
 
