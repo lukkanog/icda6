@@ -1,8 +1,10 @@
-install.packages('randomForest')
+# install.packages('randomForest')
+# install.packages('MLmetrics')
 
 library(randomForest)
 library(pROC)
 library(caret)
+library(MLmetrics)
 library(ggplot2)
 
 set.seed(21)
@@ -44,3 +46,8 @@ MatrizDeConfusaoTesteForest
 PredicaoTesteForestCurvaROC <- predict(rf, DadosGravidez2021Teste, type = "prob")[, 1]
 RocCurveTesteForest<-roc(DadosGravidez2021Teste$PARTO ~ PredicaoTesteForestCurvaROC, plot = TRUE, print.auc = TRUE)
 
+# F1 Score
+F1_Score(DadosGravidez2021Teste$PARTO, DadosGravidez2021Teste$PARTO_PREDITO_RANDOM_FOREST , positive = NULL)
+
+# Imporância das variáveis
+importance(rf)
