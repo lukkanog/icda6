@@ -9,7 +9,7 @@ summary(ModeloRegressaoLinear)
 
 
 #Matriz de confusão - Treinamento
-DadosGravidez2021Treinamento$PARTO_PREDITO_REGRESSAO_LOGISTICA <- ifelse(predict(ModeloRegressaoLinear, newdata = DadosGravidez2021Treinamento) > 0.55, 2, 1)
+DadosGravidez2021Treinamento$PARTO_PREDITO_REGRESSAO_LOGISTICA <- ifelse(predict(ModeloRegressaoLinear, newdata = DadosGravidez2021Treinamento) > 0.50, 2, 1)
 TabelaDadosTreinamento <- table(predicted = DadosGravidez2021Treinamento$PARTO_PREDITO_REGRESSAO_LOGISTICA, actual = DadosGravidez2021Treinamento$PARTO)
 confusionMatrix(TabelaDadosTreinamento, positive = "2")
 
