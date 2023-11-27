@@ -8,28 +8,6 @@ library(ggplot2)
 
 summary(DadosGravidez2021$PARTO)
 
-#### lucas
-
-
-
-flat_list <- unlist(DadosGravidez2021, recursive = TRUE)
-
-# Convert the flattened list to a transactions object
-transactions <- as(flat_list, "transactions")
-
-
-
-
-
-
-
-
-
-
-
-#########################################################################3
-
-
 ggplot(DadosGravidez2021, aes(x = LOCNASC, fill = PARTO)) +
   geom_bar() +
   labs(title = "Tipo de parto por local de nascimento",
