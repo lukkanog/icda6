@@ -28,6 +28,7 @@ MatrizDeConfusaoTreinamentoArvore
 #Montando a curva ROC com dados de treinamento
 PredicaoTreinamentoArvoreCurvaROC <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Treinamento, type = "prob")[, 1]
 RocCurveTreinamentoArvore<-roc(DadosGravidez2021Treinamento$PARTO ~ PredicaoTreinamentoArvoreCurvaROC, plot = TRUE, print.auc = TRUE)
+legend("bottomright", legend = c("Curva ROC", "Aleatório"), col = c("black", "gray"), lwd = 2)
 
 
 
@@ -43,6 +44,7 @@ MatrizDeConfusaoTesteArvore
 #Montando a curva ROC com dados de teste
 PredicaoTesteArvoreCurvaROC <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Teste, type = "prob")[, 1]
 RocCurveTesteArvore<-roc(DadosGravidez2021Teste$PARTO ~ PredicaoTesteArvoreCurvaROC, plot = TRUE, print.auc = TRUE)
+legend("bottomright", legend = c("Curva ROC", "Aleatório"), col = c("black", "gray"), lwd = 2)
 
 
 

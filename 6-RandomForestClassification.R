@@ -1,3 +1,5 @@
+install.packages('randomForest')
+
 library(randomForest)
 library(pROC)
 library(caret)
@@ -5,58 +7,40 @@ library(ggplot2)
 
 set.seed(21)
 
-#head_df_treinamento <- head(DadosGravidez2021Treinamento, 500000)
-
-# head_df_treinamento <- DadosGravidez2021Treinamento
-
-# head_df_teste <- head(DadosGravidez2021Teste, 500000)
-
-glimpse(DadosGravidez2021Treinamento)
-
-glimpse(DadosGravidez2021Teste)
-
 rf <-
   randomForest(
     formula =  PARTO ~ ESCMAE + RACACORMAE + LOCNASC + FAIXAETARIA + UF + GRAVIDEZ + PARIDADE + JA_TEVE_PARTO_CESARIA + JA_TEVE_PARTO_VAGINAL,
     data = DadosGravidez2021Treinamento,
     importance = FALSE,
-    # proximity = TRUE,
     ntree=1000,
     maxnodes=10
   )
 
-prediction <- predict(rf, DadosGravidez2021Teste)
 
-# DadosGravidez2021Teste$CORRECT_PREDICTION <- prediction
-# DadosGravidez2021Teste$CORRECT_PREDICTION <- head_df_teste$PARTO == DadosGravidez2021Teste$CORRECT_PREDICTION
-# 
-# summary(DadosGravidez2021Teste$CORRECT_PREDICTION)
+#Prevendo com dados de treinamento
+DadosGravidez2021Treinamento$PARTO_PREDITO_RANDOM_FOREST <- predict(rf, DadosGravidez2021Treinamento, type = "class")
 
-# DadosGravidez2021Teste$CORRECT_PREDICTION <- NULL
+#Avaliação do modelo com dados de treinamento
+MatrizDeConfusaoTreinamentoForest <- confusionMatrix(
+  data = DadosGravidez2021Treinamento$PARTO_PREDITO_RANDOM_FOREST,
+  reference = DadosGravidez2021Treinamento$PARTO)
+MatrizDeConfusaoTreinamentoForest
 
-View(head(DadosGravidez2021Teste))
-
-str(DadosGravidez2021Teste)
-
-str(DadosGravidez2021Teste$PARTO)
-
-cm <- confusionMatrix(data=prediction, reference = DadosGravidez2021Teste$PARTO)
-cm
+#Montando a curva ROC com dados de treinamento
+PredicaoTreinamentoForestCurvaROC <- predict(rf, DadosGravidez2021Treinamento, type = "prob")[, 1]
+RocCurveTreinamentoForest<-roc(DadosGravidez2021Treinamento$PARTO ~ PredicaoTreinamentoForestCurvaROC, plot = TRUE, print.auc = TRUE)
 
 
-ArvoreGravidezTreinamento.class.pred_6 <- predict(rf, DadosGravidez2021Teste, type = "prob")[, 2]
-ArvoreGravidezTreinamento.class_roc_6<-roc(DadosGravidez2021Teste$PARTO ~ ArvoreGravidezTreinamento.class.pred_6, plot = TRUE, print.auc = TRUE)
+#Prevendo com dados de teste
+DadosGravidez2021Teste$PARTO_PREDITO_RANDOM_FOREST <- predict(rf, DadosGravidez2021Teste, type = "class")
 
+#Avaliação do modelo com dados de treinamento
+MatrizDeConfusaoTesteForest <- confusionMatrix(
+  data = DadosGravidez2021Teste$PARTO_PREDITO_RANDOM_FOREST,
+  reference = DadosGravidez2021Teste$PARTO)
+MatrizDeConfusaoTesteForest
 
-# df_1000 = head(DadosGravidez2021Teste, 1000)
+#Montando a curva ROC com dados de treinamento
+PredicaoTesteForestCurvaROC <- predict(rf, DadosGravidez2021Teste, type = "prob")[, 1]
+RocCurveTesteForest<-roc(DadosGravidez2021Teste$PARTO ~ PredicaoTesteForestCurvaROC, plot = TRUE, print.auc = TRUE)
 
-# features <- setdiff(names(DadosGravidez2021Treinamento), "PARTO")
-# m2 <- tuneRF(
-#   x          = DadosGravidez2021Treinamento[features],
-#   y          = DadosGravidez2021Treinamento$PARTO,
-#   ntreeTry   = 500,
-#   mtryStart  = 5,
-#   stepFactor = 1.5,
-#   improve    = 0.01,
-#   trace      = TRUE     
-# )
