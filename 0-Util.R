@@ -1,3 +1,15 @@
+install.packages('rpart')
+install.packages('rpart.plot')
+install.packages('corrplot')
+install.packages('ggplot2')
+install.packages('data.table')
+install.packages('mltools')
+install.packages('randomForest')
+install.packages('readr')
+install.packages('recipes')
+install.packages('caret')
+install.packages('pROC')
+
 separaFaixaEtaria <- function(idade)
 {
   if(is.na(idade)){

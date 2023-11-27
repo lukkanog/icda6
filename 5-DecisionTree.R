@@ -3,18 +3,21 @@ library(rpart.plot)
 
 ArvoreGravidezTreinamento <- rpart(formula =  PARTO ~ ESCMAE + RACACORMAE + LOCNASC + FAIXAETARIA + UF + GRAVIDEZ + PARIDADE + JA_TEVE_PARTO_CESARIA + JA_TEVE_PARTO_VAGINAL,
                    data = DadosGravidez2021Treinamento,
-                   method = "class",  # classificação
-                   xval = 10,  # 10-fold cross-validation,
+                   method = "class",
+                   xval = 10,
                    control = rpart.control(cp = 0.0001) 
 )
 
 rpart.plot(ArvoreGravidezTreinamento)
 printcp(ArvoreGravidezTreinamento)
+plotcp(ArvoreGravidezTreinamento)
 
 ArvoreGravidezTreinamento.class <- prune(ArvoreGravidezTreinamento, 
                          cp = ArvoreGravidezTreinamento$cptable[which.min(ArvoreGravidezTreinamento$cptable[, "xerror"]), "CP"])
 
 rpart.plot(ArvoreGravidezTreinamento.class)
+printcp(ArvoreGravidezTreinamento.class)
+plotcp(ArvoreGravidezTreinamento.class)
 
 #Prevendo com dados de treinamento
 DadosGravidez2021Treinamento$PARTO_PREDITO_ARVORE_DECISAO <- predict(ArvoreGravidezTreinamento.class, DadosGravidez2021Treinamento, type = "class")
