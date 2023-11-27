@@ -11,7 +11,6 @@ DadosGravidez2021 <- DadosGravidez2021 %>%
             by = c("CODMUNNASC" = "CODMUNIC")) %>%
   rename(UF = uf_code)
 
-View(DadosGravidez2021)
 #Filtrando valores de parto não informados
 
 DadosGravidez2021 <- DadosGravidez2021[DadosGravidez2021$PARTO != 9, ]

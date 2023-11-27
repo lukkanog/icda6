@@ -5,7 +5,7 @@ ArvoreGravidezTreinamento <- rpart(formula =  PARTO ~ ESCMAE + RACACORMAE + LOCN
                    data = DadosGravidez2021Treinamento,
                    method = "class",  # classificação
                    xval = 10,  # 10-fold cross-validation,
-                   control = rpart.control(cp = 0.001) 
+                   control = rpart.control(cp = 0.0001) 
 )
 
 rpart.plot(ArvoreGravidezTreinamento)
