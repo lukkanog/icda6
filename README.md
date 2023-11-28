@@ -12,7 +12,7 @@ Repositório do projeto da disciplina de ICDA6 - Introdução à Ciência de Dad
 Foram utilizadas duas bases de dados: o [SINASC (Sistema de Informações sobre Nascidos Vivos (SINASC)](https://opendatasus.saude.gov.br/dataset/sistema-de-informacao-sobre-nascidos-vivos-sinasc/resource/16b72608-a6f0-45f6-8dee-75925ad195ce) referente ao ano de 2021; e uma base de dados contendo uma relação dos municípios do Brasil.
 
 Dentro do diretório [/data](https://github.com/lukkanog/icda6/tree/main/data) encontram-se os arquivos:
-- `Municipios.csv` - Base de daods dos municípios brasileiros
+- `Municipios.csv` - Base de dados dos municípios brasileiros
 - `data/SINASC+-+Estrutura.pdf` - Dicionário de dados da base de dados do SINASC
 - `data/SINASC_2021.csv.reduced.csv` - Base de dados do SINASC 2021 (arquivo com tamanho reduzido)
 - `data/columns-picker.py` - Utilitário para reduzir o tamanho do arquivo original da base de dados do SINASC 2021
